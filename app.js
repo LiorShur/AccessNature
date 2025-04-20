@@ -423,3 +423,20 @@ function loadSavedSessions() {
     list.appendChild(li);
   });
 }
+function loadSession(index) {
+  const saved = JSON.parse(localStorage.getItem("sessions") || "[]");
+  const session = saved[index];
+
+  routeData = session.data;
+  totalDistance = parseFloat(session.distance);
+  document.getElementById("timer").textContent = session.time;
+  document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
+
+  path = [];
+  routeData.forEach(entry => {
+    if (entry.type === "location") path.push(entry.coords);
+  });
+
+  initMap();
+  showRouteDataOnMap();
+}
