@@ -10,6 +10,7 @@ window.onload = function () {
       console.error("Invalid share data.");
     }
   }
+  loadSavedSessions();
 };
 
 let isPaused = false;
