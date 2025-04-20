@@ -388,3 +388,23 @@ function showSummary() {
 function closeSummary() {
   document.getElementById("summaryScreen").style.display = "none";
 }
+function saveSession() {
+  const name = prompt("Name this route:");
+  if (!name) return;
+
+  const session = {
+    name,
+    date: new Date().toISOString(),
+    time: document.getElementById("timer").textContent,
+    distance: totalDistance.toFixed(2),
+    data: routeData
+  };
+
+  const saved = JSON.parse(localStorage.getItem("sessions") || "[]");
+  saved.push(session);
+  localStorage.setItem("sessions", JSON.stringify(saved));
+
+  alert("Session saved!");
+  closeSummary();
+  loadSavedSessions();
+}
