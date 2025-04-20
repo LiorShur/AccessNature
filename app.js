@@ -116,6 +116,7 @@ function startTracking() {
 function stopTracking() {
   if (watchId) navigator.geolocation.clearWatch(watchId);
   stopTimer();   // stop timer
+  showSummary(); // show stats after ending
 }
 function addTextNote() {
   const note = prompt("Enter your note:");
