@@ -65,33 +65,39 @@ function startTracking() {
     watchId = navigator.geolocation.watchPosition(
       position => {
         const { latitude, longitude } = position.coords;
-        const latLng = { lat: latitude, lng: longitude };
-        // Distance update
-if (lastCoords) {
-  const dist = haversineDistance(lastCoords, latLng);
-  totalDistance += dist;
-  document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
+        if (!isPaused) {
+  const latLng = { lat: latitude, lng: longitude };
+
+  // Calculate and update distance
+  if (lastCoords) {
+    const dist = haversineDistance(lastCoords, latLng);
+    totalDistance += dist;
+    document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
+  }
+
+  lastCoords = latLng;
+
+  // Add to path and update map
+  path.push(latLng);
+  marker.setPosition(latLng);
+  map.panTo(latLng);
+
+  new google.maps.Polyline({
+    path,
+    geodesic: true,
+    strokeColor: "#00FF00",
+    strokeOpacity: 1.0,
+    strokeWeight: 2,
+    map
+  });
+
+  routeData.push({
+    type: "location",
+    timestamp: Date.now(),
+    coords: latLng
+  });
 }
-lastCoords = latLng;
-        marker.setPosition(latLng);
-        map.panTo(latLng);
 
-        path.push(latLng);
-        new google.maps.Polyline({
-          path,
-          geodesic: true,
-          strokeColor: "#00FF00",
-          strokeOpacity: 1.0,
-          strokeWeight: 2,
-          map
-        });
-
-        routeData.push({
-          type: "location",
-          timestamp: Date.now(),
-          coords: latLng
-        });
-      },
       err => console.error("GPS error:", err),
       { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
     );
