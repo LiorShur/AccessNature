@@ -371,3 +371,19 @@ function togglePause() {
     });
   }
 }
+function showSummary() {
+  stopTimer();
+
+  document.getElementById("summaryScreen").style.display = "block";
+
+  document.getElementById("summaryTime").textContent = document.getElementById("timer").textContent;
+  document.getElementById("summaryDistance").textContent = totalDistance.toFixed(2);
+
+  document.getElementById("summaryTextCount").textContent = routeData.filter(e => e.type === "text").length;
+  document.getElementById("summaryPhotoCount").textContent = routeData.filter(e => e.type === "photo").length;
+  document.getElementById("summaryAudioCount").textContent = routeData.filter(e => e.type === "audio").length;
+}
+
+function closeSummary() {
+  document.getElementById("summaryScreen").style.display = "none";
+}
