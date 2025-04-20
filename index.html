@@ -33,6 +33,16 @@
 
 
   <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none"/>
+<div id="summaryScreen" style="display:none;">
+  <h2>Route Summary</h2>
+  <p><strong>Duration:</strong> <span id="summaryTime"></span></p>
+  <p><strong>Distance:</strong> <span id="summaryDistance"></span> km</p>
+  <p><strong>Text Notes:</strong> <span id="summaryTextCount"></span></p>
+  <p><strong>Photos:</strong> <span id="summaryPhotoCount"></span></p>
+  <p><strong>Audio Notes:</strong> <span id="summaryAudioCount"></span></p>
+  <button onclick="saveSession()">Save Session</button>
+  <button onclick="closeSummary()">Close</button>
+</div>
 
   <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IoUFBPNGtVySKpFoqE9VITvGV7nkLHw&callback=initMap"
