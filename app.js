@@ -349,3 +349,19 @@ function haversineDistance(coord1, coord2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+function togglePause() {
+  isPaused = !isPaused;
+
+  const btn = document.getElementById("pauseButtonLabel");
+  btn.textContent = isPaused ? "Resume" : "Pause";
+
+  if (!isPaused) {
+    // Update lastCoords to avoid big jumps in distance
+    navigator.geolocation.getCurrentPosition(pos => {
+      lastCoords = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      };
+    });
+  }
+}
