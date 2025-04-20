@@ -12,6 +12,7 @@ window.onload = function () {
   }
 };
 
+let isPaused = false;
 let startTime = null;
 let timerInterval = null;
 let totalDistance = 0;
