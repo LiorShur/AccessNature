@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nature Tracker</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <h1>Nature Walk & Ride Tracker</h1>
+
+  <div id="map"></div>
+
+  <button onclick="startTracking()">Start Tracking</button>
+  <button onclick="stopTracking()">Stop Tracking</button>
+  <button onclick="addTextNote()">Add Text Note</button>
+  <button onclick="capturePhoto()">Capture Photo</button>
+  <button onclick="startAudioRecording()">Record Audio</button>
+  <button onclick="exportData()">Export Route</button>
+  <button onclick="showRouteDataOnMap()">Show Map Notes</button>
+  <button onclick="exportGPX()">Export as GPX</button>
+  <button onclick="exportPDF()">Export as PDF</button>
+  <button onclick="generateShareableLink()">Generate Shareable Link</button>
+
+
+  <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none"/>
+
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IoUFBPNGtVySKpFoqE9VITvGV7nkLHw&callback=initMap"
+  async
+  defer
+></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
