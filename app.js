@@ -65,7 +65,13 @@ function startTracking() {
       position => {
         const { latitude, longitude } = position.coords;
         const latLng = { lat: latitude, lng: longitude };
-
+        // Distance update
+if (lastCoords) {
+  const dist = haversineDistance(lastCoords, latLng);
+  totalDistance += dist;
+  document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
+}
+lastCoords = latLng;
         marker.setPosition(latLng);
         map.panTo(latLng);
 
