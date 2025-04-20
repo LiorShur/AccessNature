@@ -114,7 +114,7 @@ function startTracking() {
   startTimer();
 }
 function stopTracking() {
-  //if (watchId) navigator.geolocation.clearWatch(watchId);
+  if (watchId) navigator.geolocation.clearWatch(watchId);
   stopTimer();   // stop timer
 }
 function addTextNote() {
