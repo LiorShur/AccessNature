@@ -12,7 +12,10 @@ window.onload = function () {
   }
 };
 
-
+let startTime = null;
+let timerInterval = null;
+let totalDistance = 0;
+let lastCoords = null;
 let map;
 let path = [];
 let marker;
