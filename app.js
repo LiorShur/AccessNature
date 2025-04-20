@@ -408,3 +408,18 @@ function saveSession() {
   closeSummary();
   loadSavedSessions();
 }
+function loadSavedSessions() {
+  const list = document.getElementById("savedSessionsList");
+  list.innerHTML = "";
+
+  const saved = JSON.parse(localStorage.getItem("sessions") || "[]");
+  saved.forEach((session, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>${session.name}</strong> (${session.date.split("T")[0]})
+      - ${session.distance} km
+      <button onclick="loadSession(${index})">View</button>
+    `;
+    list.appendChild(li);
+  });
+}
