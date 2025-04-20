@@ -295,3 +295,27 @@ function generateShareableLink() {
     alert("Shareable link copied to clipboard!");
   });
 }
+function startTimer() {
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimerDisplay, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  updateTimerDisplay(); // final update
+}
+
+function updateTimerDisplay() {
+  const now = Date.now();
+  const elapsed = now - startTime;
+  const hrs = Math.floor(elapsed / (1000 * 60 * 60));
+  const mins = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((elapsed % (1000 * 60)) / 1000);
+
+  document.getElementById("timer").textContent =
+    `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+}
+
+function pad(num) {
+  return num.toString().padStart(2, '0');
+}
