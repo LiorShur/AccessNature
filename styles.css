@@ -13,3 +13,8 @@ body {
 button {
   margin: 5px;
 }
+#tracker-stats {
+  font-size: 18px;
+  margin: 10px;
+}
+
