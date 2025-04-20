@@ -97,10 +97,12 @@ lastCoords = latLng;
   } else {
     alert("Geolocation not supported");
   }
+  startTimer();  // start timer
 }
 
 function stopTracking() {
   if (watchId) navigator.geolocation.clearWatch(watchId);
+  stopTimer();   // stop timer
 }
 function addTextNote() {
   const note = prompt("Enter your note:");
