@@ -61,52 +61,58 @@ function updateMap(lat, lng) {
 }
 
 function startTracking() {
+  console.log("Start tracking clicked");
   if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
       position => {
+        console.log("Got position:", position);
         const { latitude, longitude } = position.coords;
+
         if (!isPaused) {
-  const latLng = { lat: latitude, lng: longitude };
+          const latLng = { lat: latitude, lng: longitude };
 
-  // Calculate and update distance
-  if (lastCoords) {
-    const dist = haversineDistance(lastCoords, latLng);
-    totalDistance += dist;
-    document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
-  }
+          // Update distance
+          if (lastCoords) {
+            const dist = haversineDistance(lastCoords, latLng);
+            totalDistance += dist;
+            document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
+          }
 
-  lastCoords = latLng;
+          lastCoords = latLng;
 
-  // Add to path and update map
-  path.push(latLng);
-  marker.setPosition(latLng);
-  map.panTo(latLng);
+          // Update path & map
+          path.push(latLng);
+          marker.setPosition(latLng);
+          map.panTo(latLng);
 
-  new google.maps.Polyline({
-    path,
-    geodesic: true,
-    strokeColor: "#00FF00",
-    strokeOpacity: 1.0,
-    strokeWeight: 2,
-    map
-  });
+          new google.maps.Polyline({
+            path,
+            geodesic: true,
+            strokeColor: "#00FF00",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map
+          });
 
-  routeData.push({
-    type: "location",
-    timestamp: Date.now(),
-    coords: latLng
-  });
-}
-
-      err => console.error("GPS error:", err),
+          routeData.push({
+            type: "location",
+            timestamp: Date.now(),
+            coords: latLng
+          });
+        }
+      },
+      err => {
+        console.error("GPS error:", err);
+        alert("Location access failed. Please enable GPS.");
+      },
       { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
     );
   } else {
     alert("Geolocation not supported");
   }
-  startTimer();  // start timer
-}
 
+  startTimer();
+}
 function stopTracking() {
   if (watchId) navigator.geolocation.clearWatch(watchId);
   stopTimer();   // stop timer
