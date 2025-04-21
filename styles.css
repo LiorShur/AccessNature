@@ -165,4 +165,43 @@ body {
   font-weight: bold;
   transition: background 0.2s ease;
 }
+.green {
+  background: #4caf50;
+}
+
+.green button {
+  background: #388e3c;
+}
+
+.blue {
+  background: #2196f3;
+}
+
+.blue button {
+  background: #1976d2;
+}
+
+.purple {
+  background: #9c27b0;
+}
+
+.purple button {
+  background: #7b1fa2;
+}
+
+.orange {
+  background: #ff9800;
+}
+
+.orange button {
+  background: #f57c00;
+}
+
+.gray {
+  background: #607d8b;
+}
+
+.gray button {
+  background: #455a64;
+}
 
