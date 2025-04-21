@@ -261,9 +261,9 @@ function startAudioRecording() {
 
       mediaRecorder.start();
 
-      setTimeout(() => {
-        mediaRecorder.stop();
-      }, 5000); // Record for 5 seconds (can be changed)
+      // setTimeout(() => {
+      //   mediaRecorder.stop();
+      // }, 5000); // Record for 5 seconds (can be changed)
     })
     .catch(err => alert("Microphone access denied."));
 }
