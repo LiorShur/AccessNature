@@ -384,19 +384,27 @@ function togglePause() {
 }
 
 function resetSession() {
+  // Reset tracking data
   totalDistance = 0;
   lastCoords = null;
   routeData = [];
   path = [];
-  elapsedTime = 0;
+  isPaused = false;
+
+  // Reset timer values
   startTime = null;
+  elapsedTime = 0;
+  clearInterval(timerInterval);
+  timerInterval = null;
+
+  // Update UI
   document.getElementById("timer").textContent = "00:00:00";
   document.getElementById("distance").textContent = "0.00 km";
-  isPaused = false;
 
   const pauseBtn = document.getElementById("pauseButtonLabel");
   if (pauseBtn) pauseBtn.textContent = "Pause";
 }
+
 function saveSession() {
   const name = prompt("Name this route:");
   if (!name) return;
@@ -416,8 +424,11 @@ function saveSession() {
   alert("Session saved!");
   closeSummary();
   loadSavedSessions();
-  resetSession(); // 👈 Add this!
+
+  // ✅ FULL RESET
+  resetSession();
 }
+
 
 function showSummary() {
   stopTimer();
@@ -435,26 +446,7 @@ function showSummary() {
 function closeSummary() {
   document.getElementById("summaryScreen").style.display = "none";
 }
-function saveSession() {
-  const name = prompt("Name this route:");
-  if (!name) return;
 
-  const session = {
-    name,
-    date: new Date().toISOString(),
-    time: document.getElementById("timer").textContent,
-    distance: totalDistance.toFixed(2),
-    data: routeData
-  };
-
-  const saved = JSON.parse(localStorage.getItem("sessions") || "[]");
-  saved.push(session);
-  localStorage.setItem("sessions", JSON.stringify(saved));
-
-  alert("Session saved!");
-  closeSummary();
-  loadSavedSessions();
-}
 function loadSavedSessions() {
   const list = document.getElementById("savedSessionsList");
   list.innerHTML = "";
