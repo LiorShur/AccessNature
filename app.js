@@ -363,8 +363,14 @@ function togglePause() {
   const btn = document.getElementById("pauseButtonLabel");
   btn.textContent = isPaused ? "Resume" : "Pause";
 
-  if (!isPaused) {
-    // Update lastCoords to avoid big jumps in distance
+  if (isPaused) {
+    clearInterval(timerInterval); // ⛔ Pause timer
+  } else {
+    // Resume timer by updating base startTime
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+
+    // Update last GPS to avoid distance spike
     navigator.geolocation.getCurrentPosition(pos => {
       lastCoords = {
         lat: pos.coords.latitude,
@@ -373,6 +379,7 @@ function togglePause() {
     });
   }
 }
+
 function showSummary() {
   stopTimer();
 
