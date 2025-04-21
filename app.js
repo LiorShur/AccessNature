@@ -344,14 +344,66 @@ function exportData() {
   link.click();
   document.body.removeChild(link);
 }
-function showRouteDataOnMap() {
-  console.log("📍 Showing notes, total entries:", routeData.length);
 
+function showMediaFullScreen(content, type) {
+  // Create the full-screen overlay
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+  overlay.style.display = "flex";
+  overlay.style.justifyContent = "center";
+  overlay.style.alignItems = "center";
+  overlay.style.zIndex = "1000";
+
+  // Close button
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "Close";
+  closeBtn.style.position = "absolute";
+  closeBtn.style.top = "20px";
+  closeBtn.style.right = "20px";
+  closeBtn.style.padding = "10px 20px";
+  closeBtn.style.fontSize = "16px";
+  closeBtn.style.backgroundColor = "#f44336";
+  closeBtn.style.color = "#fff";
+  closeBtn.style.border = "none";
+  closeBtn.style.cursor = "pointer";
+  
+  closeBtn.onclick = function() {
+    document.body.removeChild(overlay); // Close the full screen
+  };
+  
+  // Add close button
+  overlay.appendChild(closeBtn);
+
+  // Create media content
+  if (type === "photo") {
+    const img = document.createElement("img");
+    img.src = content; // Base64 or image URL
+    img.style.maxWidth = "90%";
+    img.style.maxHeight = "90%";
+    img.style.objectFit = "contain";
+    overlay.appendChild(img);
+  } else if (type === "video") {
+    const video = document.createElement("video");
+    video.src = content; // Base64 or video URL
+    video.controls = true;
+    video.style.maxWidth = "90%";
+    video.style.maxHeight = "90%";
+    video.style.objectFit = "contain";
+    overlay.appendChild(video);
+  }
+
+  // Append overlay to body
+  document.body.appendChild(overlay);
+}
+
+function showRouteDataOnMap() {
   routeData.forEach(entry => {
     const { coords, type, content } = entry;
-
-    if (!coords || !type || !content) return;
-
     let infoContent = "";
 
     if (type === "text") {
@@ -360,17 +412,17 @@ function showRouteDataOnMap() {
       infoContent = `<img src="${content}" alt="Photo" style="width:150px"/>`;
     } else if (type === "audio") {
       infoContent = `<audio controls src="${content}"></audio>`;
-    } else if (type === "video") {
-      infoContent = `<video controls width="200" src="${content}"></video>`;
     } else {
-      return; // skip unknown or location-only
+      return; // skip location-only
     }
 
     const marker = new google.maps.Marker({
       position: coords,
       map: map,
       icon: {
-        url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        url: type === "photo" ? "📸" :
+             type === "audio" ? "🎙️" :
+             "📝",
         scaledSize: new google.maps.Size(32, 32)
       }
     });
@@ -381,9 +433,17 @@ function showRouteDataOnMap() {
 
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
+      // Add full-screen option for photos and videos
+      if (type === "photo" || type === "video") {
+        showMediaFullScreen(content, type);
+      }
     });
   });
 }
+
+
+//function showRouteDataOnMap() {
+
 
 function exportGPX() {
   let gpx = `<?xml version="1.0" encoding="UTF-8"?>
