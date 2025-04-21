@@ -121,15 +121,7 @@ body {
   border-radius: 4px;
   font-size: 0.9em;
 }
-@media (max-width: 600px) {
-  .button-group button {
-    flex: 1 1 100%;
-  }
 
-  #map {
-    height: 50vh;
-  }
-}
 #fab {
   position: fixed;
   bottom: 100px;
@@ -165,6 +157,17 @@ body {
   font-weight: bold;
   transition: background 0.2s ease;
 }
+
+.stats-row {
+  background: #ffffff;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
 .green {
   background: #4caf50;
 }
@@ -204,4 +207,12 @@ body {
 .gray button {
   background: #455a64;
 }
+@media (max-width: 600px) {
+  .button-group button {
+    flex: 1 1 100%;
+  }
 
+  #map {
+    height: 50vh;
+  }
+}
