@@ -1,4 +1,33 @@
 window.onload = function () {
+window.addEventListener("load", function () {
+  const videoInput = document.getElementById("videoInput");
+
+  if (videoInput) {
+    videoInput.addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function () {
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+
+          routeData.push({
+            type: "video",
+            timestamp: Date.now(),
+            coords: { lat: latitude, lng: longitude },
+            content: reader.result
+          });
+
+          alert("🎥 Video saved at your location.");
+        });
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+});
+
   const params = new URLSearchParams(window.location.search);
   const base64Data = params.get("data");
   if (base64Data) {
