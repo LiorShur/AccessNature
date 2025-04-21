@@ -37,12 +37,12 @@ navigator.geolocation.getCurrentPosition(
 
         map.setCenter(userLatLng);
         marker.setPosition(userLatLng);
-      },
-  marker = new google.maps.Marker({
-    position: fallbackLatLng,
-    map,
-    title: "Your Location"
-  });
+      }
+  // marker = new google.maps.Marker({
+  //   position: fallbackLatLng,
+  //   map,
+  //   title: "Your Location"
+  // });
 
   // Try to get user's actual location
   if (navigator.geolocation) {
