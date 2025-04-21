@@ -197,6 +197,31 @@ function startAudioRecording() {
     })
     .catch(err => alert("Microphone access denied."));
 }
+
+document.getElementById("videoInput").addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        routeData.push({
+          type: "video",
+          timestamp: Date.now(),
+          coords: { lat: latitude, lng: longitude },
+          content: reader.result // Base64 video
+        });
+        alert("Video saved at your location.");
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+function captureVideo() {
+  document.getElementById("videoInput").click();
+}
+
 function exportData() {
   const fileName = `route-${new Date().toISOString()}.json`;
   const blob = new Blob([JSON.stringify(routeData, null, 2)], { type: "application/json" });
