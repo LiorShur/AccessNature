@@ -402,8 +402,13 @@ function showMediaFullScreen(content, type) {
 }
 
 function showRouteDataOnMap() {
+  console.log("📍 Showing notes, total entries:", routeData.length);
+
   routeData.forEach(entry => {
     const { coords, type, content } = entry;
+
+    if (!coords || !type || !content) return;
+
     let infoContent = "";
 
     if (type === "text") {
@@ -412,17 +417,17 @@ function showRouteDataOnMap() {
       infoContent = `<img src="${content}" alt="Photo" style="width:150px"/>`;
     } else if (type === "audio") {
       infoContent = `<audio controls src="${content}"></audio>`;
+    } else if (type === "video") {
+      infoContent = `<video controls width="200" src="${content}"></video>`;
     } else {
-      return; // skip location-only
+      return; // skip unknown or location-only
     }
 
     const marker = new google.maps.Marker({
       position: coords,
       map: map,
       icon: {
-        url: type === "photo" ? "📸" :
-             type === "audio" ? "🎙️" :
-             "📝",
+        url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         scaledSize: new google.maps.Size(32, 32)
       }
     });
@@ -433,17 +438,9 @@ function showRouteDataOnMap() {
 
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
-      // Add full-screen option for photos and videos
-      if (type === "photo" || type === "video") {
-        showMediaFullScreen(content, type);
-      }
     });
   });
 }
-
-
-//function showRouteDataOnMap() {
-
 
 function exportGPX() {
   let gpx = `<?xml version="1.0" encoding="UTF-8"?>
