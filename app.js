@@ -62,7 +62,7 @@ function updateMap(lat, lng) {
   });
 }
 
-function startTracking() {
+window.startTracking = function () {
   console.log("Start tracking clicked");
   if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
