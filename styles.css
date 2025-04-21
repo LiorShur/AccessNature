@@ -171,11 +171,11 @@ body {
 #header {
   background: linear-gradient(135deg, #4caf50, #81c784);
   color: #ffffff;
-  padding: 20px;
+  padding: 0px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border-radius: 0px;
 }
 
