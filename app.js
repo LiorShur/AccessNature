@@ -209,6 +209,7 @@ function exportData() {
   document.body.removeChild(link);
 }
 function showRouteDataOnMap() {
+  console.log("Rendering notes on map...", routeData.length);
   routeData.forEach(entry => {
     const { coords, type, content } = entry;
     let infoContent = "";
