@@ -77,7 +77,15 @@
 
   <!-- Hidden inputs for media capture -->
   <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none" />
-  <input type="file" accept="video/*" capture="environment" id="videoInput" style="display: none" />
+<!--   <input type="file" accept="video/*" capture="environment" id="videoInput" style="display: none" /> -->
+<input
+  type="file"
+  id="videoInput"
+  accept="video/*"
+  capture
+  style="display: none"
+/>
+
 <div id="summaryScreen" style="display:none;">
   <h2>Route Summary</h2>
   <p><strong>Duration:</strong> <span id="summaryTime"></span></p>
