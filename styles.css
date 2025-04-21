@@ -167,6 +167,32 @@ body {
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
+/* Header Styling */
+#header {
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 12px;
+}
+
+#header h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+#header h1 span {
+  font-size: 1.5em;
+  color: #ffeb3b; /* Add a bright color to part of the title */
+}
+
 
 .green {
   background: #4caf50;
@@ -207,6 +233,13 @@ body {
 .gray button {
   background: #455a64;
 }
+
+@media (max-width: 600px) {
+  #header h1 {
+    font-size: 1.8em;  /* Slightly smaller font size on mobile */
+  }
+}
+
 @media (max-width: 600px) {
   .button-group button {
     flex: 1 1 100%;
