@@ -13,6 +13,7 @@ window.onload = function () {
   loadSavedSessions();
 };
 
+let elapsedTime = 0;
 let isPaused = false;
 let startTime = null;
 let timerInterval = null;
@@ -320,20 +321,22 @@ function generateShareableLink() {
 }
 function startTimer() {
   startTime = Date.now();
+  elapsedTime = 0;
   timerInterval = setInterval(updateTimerDisplay, 1000);
 }
 
 function stopTimer() {
   clearInterval(timerInterval);
-  updateTimerDisplay(); // final update
+  updateTimerDisplay();
 }
 
 function updateTimerDisplay() {
   const now = Date.now();
-  const elapsed = now - startTime;
-  const hrs = Math.floor(elapsed / (1000 * 60 * 60));
-  const mins = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((elapsed % (1000 * 60)) / 1000);
+  elapsedTime = now - startTime;
+
+  const hrs = Math.floor(elapsedTime / (1000 * 60 * 60));
+  const mins = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
   document.getElementById("timer").textContent =
     `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
@@ -378,6 +381,42 @@ function togglePause() {
       };
     });
   }
+}
+
+function resetSession() {
+  totalDistance = 0;
+  lastCoords = null;
+  routeData = [];
+  path = [];
+  elapsedTime = 0;
+  startTime = null;
+  document.getElementById("timer").textContent = "00:00:00";
+  document.getElementById("distance").textContent = "0.00 km";
+  isPaused = false;
+
+  const pauseBtn = document.getElementById("pauseButtonLabel");
+  if (pauseBtn) pauseBtn.textContent = "Pause";
+}
+function saveSession() {
+  const name = prompt("Name this route:");
+  if (!name) return;
+
+  const session = {
+    name,
+    date: new Date().toISOString(),
+    time: document.getElementById("timer").textContent,
+    distance: totalDistance.toFixed(2),
+    data: routeData
+  };
+
+  const saved = JSON.parse(localStorage.getItem("sessions") || "[]");
+  saved.push(session);
+  localStorage.setItem("sessions", JSON.stringify(saved));
+
+  alert("Session saved!");
+  closeSummary();
+  loadSavedSessions();
+  resetSession(); // 👈 Add this!
 }
 
 function showSummary() {
