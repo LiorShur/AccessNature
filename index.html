@@ -12,7 +12,7 @@
   <div id="map" style="width: 100%; height: 400px;"></div>
 
 
-<div id="tracker-stats">
+<!-- <div id="tracker-stats">
   ⏱️ Time: <span id="timer">00:00:00</span> |
   📏 Distance: <span id="distance">0.00 km</span>
 </div>
@@ -38,7 +38,44 @@
   <ul id="savedSessionsList"></ul>
 </div>
   <input type="file" accept="video/*" capture="environment" id="videoInput" style="display: none" />
-  <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none"/>
+  <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none"/> -->
+
+  <div id="controls">
+    <div class="stats">
+      ⏱️ <span id="timer">00:00:00</span>
+      📏 <span id="distance">0.00 km</span>
+    </div>
+
+    <div class="button-group">
+      <button onclick="startTracking()">▶️ Start</button>
+      <button onclick="togglePause()" id="pauseButton"><span id="pauseButtonLabel">Pause</span></button>
+      <button onclick="stopTracking()">⏹️ Stop</button>
+    </div>
+
+    <div class="button-group">
+      <button onclick="addTextNote()">📝 Add Note</button>
+      <button onclick="capturePhoto()">📸 Photo</button>
+      <button onclick="startAudioRecording()">🎤 Audio</button>
+      <button onclick="captureVideo()">🎥 Video</button>
+    </div>
+
+    <div class="button-group">
+      <button onclick="saveSession()">💾 Save</button>
+      <button onclick="generateShareableLink()">🔗 Share</button>
+      <button onclick="exportData()">📄 Export JSON</button>
+      <button onclick="exportPDF()">📄 Export PDF</button>
+      <button onclick="exportGPX()">📍 Export GPX</button>
+    </div>
+
+    <div class="sessions">
+      <h3>📂 Saved Routes</h3>
+      <ul id="savedSessionsList"></ul>
+    </div>
+  </div>
+
+  <!-- Hidden inputs for media capture -->
+  <input type="file" accept="image/*" capture="environment" id="photoInput" style="display: none" />
+  <input type="file" accept="video/*" capture="environment" id="videoInput" style="display: none" />
 <div id="summaryScreen" style="display:none;">
   <h2>Route Summary</h2>
   <p><strong>Duration:</strong> <span id="summaryTime"></span></p>
