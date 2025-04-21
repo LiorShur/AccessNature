@@ -234,9 +234,13 @@ function exportData() {
   document.body.removeChild(link);
 }
 function showRouteDataOnMap() {
-  console.log("Rendering notes on map...", routeData.length);
+  console.log("📍 Showing notes, total entries:", routeData.length);
+
   routeData.forEach(entry => {
     const { coords, type, content } = entry;
+
+    if (!coords || !type || !content) return;
+
     let infoContent = "";
 
     if (type === "text") {
@@ -246,18 +250,16 @@ function showRouteDataOnMap() {
     } else if (type === "audio") {
       infoContent = `<audio controls src="${content}"></audio>`;
     } else if (type === "video") {
-  infoContent = `<video controls width="200" src="${content}"></video>`;
+      infoContent = `<video controls width="200" src="${content}"></video>`;
     } else {
-      return; // skip location-only
+      return; // skip unknown or location-only
     }
 
     const marker = new google.maps.Marker({
       position: coords,
       map: map,
       icon: {
-        url: type === "photo" ? "📸" :
-             type === "audio" ? "🎙️" :
-             "📝",
+        url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         scaledSize: new google.maps.Size(32, 32)
       }
     });
@@ -271,6 +273,7 @@ function showRouteDataOnMap() {
     });
   });
 }
+
 function exportGPX() {
   let gpx = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="NatureTracker" xmlns="http://www.topografix.com/GPX/1/1">
