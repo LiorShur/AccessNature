@@ -130,4 +130,17 @@ body {
     height: 50vh;
   }
 }
+#fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff5722;
+  color: white;
+  font-size: 24px;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
 
