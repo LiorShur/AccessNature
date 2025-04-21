@@ -28,7 +28,7 @@ let routeData = [];
 window.initMap = function () {
   // Default fallback location (e.g. center of the US)
   //const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
-    navigator.geolocation.getCurrentPosition(
+navigator.geolocation.getCurrentPosition(
       position => {
         const userLatLng = {
           lat: position.coords.latitude,
@@ -37,11 +37,7 @@ window.initMap = function () {
 
         map.setCenter(userLatLng);
         marker.setPosition(userLatLng);
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: fallbackLatLng
-  });
-
+      },
   marker = new google.maps.Marker({
     position: fallbackLatLng,
     map,
