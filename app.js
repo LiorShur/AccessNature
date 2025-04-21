@@ -511,6 +511,10 @@ function loadSession(index) {
     if (entry.type === "location") path.push(entry.coords);
   });
 
-  initMap();
-  showRouteDataOnMap();
+  // Now load map and wait to show data
+  initMap(() => {
+    renderSavedPath();
+    showRouteDataOnMap();
+  });
 }
+
