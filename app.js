@@ -28,6 +28,12 @@ let routeData = [];
 window.initMap = function () {
   // Default fallback location (e.g. center of the US)
   const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: fallbackLatLng
+  });
+
   marker = new google.maps.Marker({
     position: fallbackLatLng,
     map,
@@ -54,6 +60,7 @@ window.initMap = function () {
     console.warn("Geolocation not supported, using fallback location.");
   }
 };
+
 
 // window.initMap = function (callback = null) {
 //   const dummyLatLng = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
