@@ -517,4 +517,19 @@ function loadSession(index) {
     showRouteDataOnMap();
   });
 }
+function renderSavedPath() {
+  if (path.length > 0) {
+    new google.maps.Polyline({
+      path: path,
+      geodesic: true,
+      strokeColor: "#00FF00",
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+      map
+    });
+
+    map.setCenter(path[0]); // Center on start
+    marker.setPosition(path[0]);
+  }
+}
 
