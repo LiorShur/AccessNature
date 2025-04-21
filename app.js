@@ -27,22 +27,12 @@ let routeData = [];
 
 window.initMap = function () {
   // Default fallback location (e.g. center of the US)
-  //const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
-navigator.geolocation.getCurrentPosition(
-      position => {
-        const userLatLng = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        map.setCenter(userLatLng);
-        marker.setPosition(userLatLng);
-      }
-  // marker = new google.maps.Marker({
-  //   position: fallbackLatLng,
-  //   map,
-  //   title: "Your Location"
-  // });
+  const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
+  marker = new google.maps.Marker({
+    position: fallbackLatLng,
+    map,
+    title: "Your Location"
+  });
 
   // Try to get user's actual location
   if (navigator.geolocation) {
