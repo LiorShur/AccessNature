@@ -245,6 +245,10 @@ function showRouteDataOnMap() {
       infoContent = `<img src="${content}" alt="Photo" style="width:150px"/>`;
     } else if (type === "audio") {
       infoContent = `<audio controls src="${content}"></audio>`;
+    } else if (type === "video") {
+  infoContent = `<video controls width="200" src="${content}"></video>`;
+}
+
     } else {
       return; // skip location-only
     }
