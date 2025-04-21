@@ -249,7 +249,7 @@ function showRouteDataOnMap() {
   infoContent = `<video controls width="200" src="${content}"></video>`;
     } else {
       return; // skip location-only
-    )}
+    }
 
     const marker = new google.maps.Marker({
       position: coords,
