@@ -198,7 +198,9 @@ function startAudioRecording() {
     .catch(err => alert("Microphone access denied."));
 }
 
-document.getElementById("videoInput").addEventListener("change", function (e) {
+
+function captureVideo() {
+  document.getElementById("videoInput").addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
@@ -218,8 +220,6 @@ document.getElementById("videoInput").addEventListener("change", function (e) {
   }
 });
 
-function captureVideo() {
-  document.getElementById("videoInput").click();
 }
 
 function exportData() {
