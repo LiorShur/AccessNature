@@ -25,8 +25,8 @@ let marker;
 let watchId;
 let routeData = [];
 
-window.initMap = function () {
-  const dummyLatLng = { lat: 0, lng: 0 };
+window.initMap = function (callback = null) {
+  const dummyLatLng = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
 
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 15,
@@ -36,9 +36,13 @@ window.initMap = function () {
   marker = new google.maps.Marker({
     position: dummyLatLng,
     map,
-    title: "Waiting for GPS..."
+    title: "Starting Point"
   });
+
+  // Callback once map is ready
+  if (callback) callback();
 };
+
 
 function updateMap(lat, lng) {
   const latLng = { lat, lng };
