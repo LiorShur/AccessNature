@@ -239,29 +239,68 @@ function startAudioRecording() {
     .catch(err => alert("Microphone access denied."));
 }
 
+window.captureVideo = function () {
+  const input = document.getElementById("videoInput");
+  if (!input) {
+    console.error("Video input element not found!");
+    return;
+  }
+  input.click();
+};
+window.addEventListener("load", function () {
+  const videoInput = document.getElementById("videoInput");
 
-function captureVideo() {
-  document.getElementById("videoInput").addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        routeData.push({
-          type: "video",
-          timestamp: Date.now(),
-          coords: { lat: latitude, lng: longitude },
-          content: reader.result // Base64 video
-        });
-        alert("Video saved at your location.");
-      });
-    };
-    reader.readAsDataURL(file);
+  if (videoInput) {
+    videoInput.addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          // Get current location and store with video
+          navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+
+            routeData.push({
+              type: "video",
+              timestamp: Date.now(),
+              coords: { lat: latitude, lng: longitude },
+              content: reader.result
+            });
+
+            alert("🎥 Video saved at current location.");
+          });
+        };
+
+        reader.readAsDataURL(file); // Convert to base64
+      }
+    });
+  } else {
+    console.warn("Video input not found at load.");
   }
 });
 
-}
+// function captureVideo() {
+//   document.getElementById("videoInput").addEventListener("change", function (e) {
+//   const file = e.target.files[0];
+//   if (file) {
+//     const reader = new FileReader();
+//     reader.onload = function () {
+//       navigator.geolocation.getCurrentPosition(position => {
+//         const { latitude, longitude } = position.coords;
+//         routeData.push({
+//           type: "video",
+//           timestamp: Date.now(),
+//           coords: { lat: latitude, lng: longitude },
+//           content: reader.result // Base64 video
+//         });
+//         alert("Video saved at your location.");
+//       });
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// });
+
+// }
 
 function exportData() {
   const fileName = `route-${new Date().toISOString()}.json`;
