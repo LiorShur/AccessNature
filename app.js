@@ -245,8 +245,10 @@ window.captureVideo = function () {
     console.error("Video input element not found!");
     return;
   }
+  input.value = "";
   input.click();
 };
+
 window.addEventListener("load", function () {
   const videoInput = document.getElementById("videoInput");
 
