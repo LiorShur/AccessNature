@@ -25,23 +25,59 @@ let marker;
 let watchId;
 let routeData = [];
 
-window.initMap = function (callback = null) {
-  const dummyLatLng = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
+window.initMap = function () {
+  // Default fallback location (e.g. center of the US)
+  const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
 
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 15,
-    center: dummyLatLng
+    center: fallbackLatLng
   });
 
   marker = new google.maps.Marker({
-    position: dummyLatLng,
+    position: fallbackLatLng,
     map,
-    title: "Starting Point"
+    title: "Your Location"
   });
 
-  // Callback once map is ready
-  if (callback) callback();
+  // Try to get user's actual location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const userLatLng = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        map.setCenter(userLatLng);
+        marker.setPosition(userLatLng);
+      },
+      error => {
+        console.warn("Geolocation failed, using fallback:", error);
+      }
+    );
+  } else {
+    console.warn("Geolocation not supported, using fallback location.");
+  }
 };
+
+// window.initMap = function (callback = null) {
+//   const dummyLatLng = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
+
+//   map = new google.maps.Map(document.getElementById("map"), {
+//     zoom: 15,
+//     center: dummyLatLng
+//   });
+
+//   marker = new google.maps.Marker({
+//     position: dummyLatLng,
+//     map,
+//     title: "Starting Point"
+//   });
+
+//   // Callback once map is ready
+//   if (callback) callback();
+// };
 
 
 function updateMap(lat, lng) {
