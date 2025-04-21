@@ -27,18 +27,18 @@ let routeData = [];
 
 window.initMap = function () {
   // Default fallback location (e.g. center of the US)
-  const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
+  // const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
 
-  map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: fallbackLatLng
-  });
+  // map = new google.maps.Map(document.getElementById("map"), {
+  //   zoom: 15,
+  //   center: fallbackLatLng
+  // });
 
-  marker = new google.maps.Marker({
-    position: fallbackLatLng,
-    map,
-    title: "Your Location"
-  });
+  // marker = new google.maps.Marker({
+  //   position: fallbackLatLng,
+  //   map,
+  //   title: "Your Location"
+  // });
 
   // Try to get user's actual location
   if (navigator.geolocation) {
