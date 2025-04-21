@@ -438,6 +438,9 @@ function showRouteDataOnMap() {
 
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
+      if (type === "photo" || type === "video") {
+        showMediaFullScreen(content, type);
+      }
     });
   });
 }
