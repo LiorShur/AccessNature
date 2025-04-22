@@ -722,4 +722,21 @@ function renderSavedPath() {
     marker.setPosition(path[0]);
   }
 }
+function drawSavedRoutePath() {
+  if (path.length > 1) {
+    new google.maps.Polyline({
+      path,
+      geodesic: true,
+      strokeColor: "#00FF00",
+      strokeOpacity: 1.0,
+      strokeWeight: 3,
+      map
+    });
+  }
+
+  if (path.length > 0) {
+    map.setCenter(path[0]);
+    marker.setPosition(path[0]);
+  }
+}
 
