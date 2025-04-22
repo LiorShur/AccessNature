@@ -28,6 +28,19 @@ window.addEventListener("load", function () {
   }
 });
 
+  let elapsedTime = 0;
+let isPaused = false;
+let startTime = null;
+let timerInterval = null;
+let totalDistance = 0;
+let lastCoords = null;
+let map;
+let path = [];
+let marker;
+let watchId;
+let routeData = [];
+
+
   const params = new URLSearchParams(window.location.search);
   const base64Data = params.get("data");
   if (base64Data) {
@@ -70,72 +83,61 @@ watchId = navigator.geolocation.watchPosition(
 );
 
 
-let elapsedTime = 0;
-let isPaused = false;
-let startTime = null;
-let timerInterval = null;
-let totalDistance = 0;
-let lastCoords = null;
-let map;
-let path = [];
-let marker;
-let watchId;
-let routeData = [];
 
-window.initMap = function (callback) {
-  const initial = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: initial,
-    zoom: 15,
-    mapTypeId: "terrain"
-  });
-
-  marker = new google.maps.Marker({
-    position: initial,
-    map,
-    title: "Start"
-  });
-
-  if (callback) callback(); // ✅ Run once map is ready
-};
-
-
-// window.initMap = function () {
-//   // Default fallback location (e.g. center of the US)
-//   const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
+// window.initMap = function (callback) {
+//   const initial = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
 
 //   map = new google.maps.Map(document.getElementById("map"), {
+//     center: initial,
 //     zoom: 15,
-//     center: fallbackLatLng
+//     mapTypeId: "terrain"
 //   });
 
 //   marker = new google.maps.Marker({
-//     position: fallbackLatLng,
+//     position: initial,
 //     map,
-//     title: "Your Location"
+//     title: "Start"
 //   });
 
-//   // Try to get user's actual location
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(
-//       position => {
-//         const userLatLng = {
-//           lat: position.coords.latitude,
-//           lng: position.coords.longitude
-//         };
-
-//         map.setCenter(userLatLng);
-//         marker.setPosition(userLatLng);
-//       },
-//       error => {
-//         console.warn("Geolocation failed, using fallback:", error);
-//       }
-//     );
-//   } else {
-//     console.warn("Geolocation not supported, using fallback location.");
-//   }
+//   if (callback) callback(); // ✅ Run once map is ready
 // };
+
+
+window.initMap = function (callback) {
+  // Default fallback location (e.g. center of the US)
+  const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: fallbackLatLng
+  });
+
+  marker = new google.maps.Marker({
+    position: fallbackLatLng,
+    map,
+    title: "Your Location"
+  });
+if (callback) callback(); // ✅ Run once map is ready
+  // Try to get user's actual location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const userLatLng = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        map.setCenter(userLatLng);
+        marker.setPosition(userLatLng);
+      },
+      error => {
+        console.warn("Geolocation failed, using fallback:", error);
+      }
+    );
+  } else {
+    console.warn("Geolocation not supported, using fallback location.");
+  }
+};
 
 
 // window.initMap = function (callback = null) {
