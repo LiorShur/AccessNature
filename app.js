@@ -673,17 +673,21 @@ function loadSession(index) {
   document.getElementById("timer").textContent = session.time;
   document.getElementById("distance").textContent = totalDistance.toFixed(2) + " km";
 
+  // Rebuild path from routeData
   path = [];
   routeData.forEach(entry => {
-    if (entry.type === "location") path.push(entry.coords);
+    if (entry.type === "location") {
+      path.push(entry.coords);
+    }
   });
 
-  // Now load map and wait to show data
-  initMap(() => {
-    renderSavedPath();
+  // 🧠 Wait for map to load, then draw route + notes
+  window.initMap(() => {
+    drawSavedRoutePath();
     showRouteDataOnMap();
   });
 }
+
 function renderSavedPath() {
   if (path.length > 0) {
     new google.maps.Polyline({
