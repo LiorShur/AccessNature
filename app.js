@@ -42,6 +42,34 @@ window.addEventListener("load", function () {
   loadSavedSessions();
 };
 
+const { latitude, longitude, accuracy } = position.coords;
+
+// Skip if GPS accuracy is too low (> 25 meters)
+if (accuracy > 25) {
+  console.warn("Skipping inaccurate point:", accuracy);
+  return;
+}
+
+// Optionally: ignore jumps > 100m in distance
+if (lastCoords) {
+  const dist = haversineDistance(lastCoords, { lat: latitude, lng: longitude });
+  if (dist > 0.2) {
+    console.warn("Ignoring large jump:", dist);
+    return;
+  }
+}
+
+watchId = navigator.geolocation.watchPosition(
+  position => { ... },
+  error => console.error("GPS error:", error),
+  {
+    enableHighAccuracy: true,      // 🔥 Get best accuracy
+    timeout: 10000,                // Wait up to 10 seconds
+    maximumAge: 0                  // Don’t reuse cached position
+  }
+);
+
+
 let elapsedTime = 0;
 let isPaused = false;
 let startTime = null;
@@ -127,16 +155,6 @@ window.initMap = function (callback) {
 //   // Callback once map is ready
 //   if (callback) callback();
 // };
-
-watchId = navigator.geolocation.watchPosition(
-  position => { ... },
-  error => console.error("GPS error:", error),
-  {
-    enableHighAccuracy: true,      // 🔥 Get best accuracy
-    timeout: 10000,                // Wait up to 10 seconds
-    maximumAge: 0                  // Don’t reuse cached position
-  }
-);
 
 function updateMap(lat, lng) {
   const latLng = { lat, lng };
