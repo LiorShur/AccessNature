@@ -74,7 +74,7 @@ let routeData = [];
 // };
 
 
-window.initMap = function (callback) {
+window.initMap = function () {
   // Default fallback location (e.g. center of the US)
   const fallbackLatLng = { lat: 39.8283, lng: -98.5795 };
 
@@ -88,7 +88,7 @@ window.initMap = function (callback) {
     map,
     title: "Your Location"
   });
-if (callback) callback(); // ✅ Run once map is ready
+
   // Try to get user's actual location
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
