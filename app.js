@@ -128,6 +128,15 @@ window.initMap = function (callback) {
 //   if (callback) callback();
 // };
 
+watchId = navigator.geolocation.watchPosition(
+  position => { ... },
+  error => console.error("GPS error:", error),
+  {
+    enableHighAccuracy: true,      // 🔥 Get best accuracy
+    timeout: 10000,                // Wait up to 10 seconds
+    maximumAge: 0                  // Don’t reuse cached position
+  }
+);
 
 function updateMap(lat, lng) {
   const latLng = { lat, lng };
