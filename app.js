@@ -55,23 +55,6 @@ let routeData = [];
   loadSavedSessions();
 };
 
-const { latitude, longitude, accuracy } = position.coords;
-
-// Skip if GPS accuracy is too low (> 25 meters)
-if (accuracy > 25) {
-  console.warn("Skipping inaccurate point:", accuracy);
-  return;
-}
-
-// Optionally: ignore jumps > 100m in distance
-if (lastCoords) {
-  const dist = haversineDistance(lastCoords, { lat: latitude, lng: longitude });
-  if (dist > 0.2) {
-    console.warn("Ignoring large jump:", dist);
-    return;
-  }
-}
-
 // window.initMap = function (callback) {
 //   const initial = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
 
@@ -175,7 +158,20 @@ window.startTracking = function () {
       position => {
         console.log("Got position:", position);
         const { latitude, longitude } = position.coords;
+        // ✅ Accuracy filter — skip inaccurate points
+    if (accuracy > 25) {
+      console.warn("📍 Skipping inaccurate point:", accuracy, "m");
+      return;
+    }
 
+    // ✅ Distance jump filter — skip spikes
+    if (lastCoords) {
+      const dist = haversineDistance(lastCoords, { lat: latitude, lng: longitude });
+      if (dist > 0.2) { // e.g. over 200 meters
+        console.warn("📍 Ignoring large GPS jump:", dist.toFixed(2), "km");
+        return;
+      }
+    }
         if (!isPaused) {
           const latLng = { lat: latitude, lng: longitude };
 
