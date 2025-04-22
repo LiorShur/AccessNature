@@ -72,18 +72,6 @@ if (lastCoords) {
   }
 }
 
-watchId = navigator.geolocation.watchPosition(
-  position => { ... },
-  error => console.error("GPS error:", error),
-  {
-    enableHighAccuracy: true,      // 🔥 Get best accuracy
-    timeout: 10000,                // Wait up to 10 seconds
-    maximumAge: 0                  // Don’t reuse cached position
-  }
-);
-
-
-
 // window.initMap = function (callback) {
 //   const initial = path.length > 0 ? path[0] : { lat: 0, lng: 0 };
 
@@ -225,7 +213,7 @@ window.startTracking = function () {
         console.error("GPS error:", err);
         alert("Location access failed. Please enable GPS.");
       },
-      { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
     );
   } else {
     alert("Geolocation not supported");
