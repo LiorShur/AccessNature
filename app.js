@@ -28,19 +28,6 @@ window.addEventListener("load", function () {
   }
 });
 
-  let elapsedTime = 0;
-let isPaused = false;
-let startTime = null;
-let timerInterval = null;
-let totalDistance = 0;
-let lastCoords = null;
-let map;
-let path = [];
-let marker;
-let watchId;
-let routeData = [];
-
-
   const params = new URLSearchParams(window.location.search);
   const base64Data = params.get("data");
   if (base64Data) {
@@ -73,6 +60,17 @@ let routeData = [];
 //   if (callback) callback(); // ✅ Run once map is ready
 // };
 
+let elapsedTime = 0;
+let isPaused = false;
+let startTime = null;
+let timerInterval = null;
+let totalDistance = 0;
+let lastCoords = null;
+let map;
+let path = [];
+let marker;
+let watchId;
+let routeData = [];
 
 window.initMap = function () {
   // Default fallback location (e.g. center of the US)
